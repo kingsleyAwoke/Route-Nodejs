@@ -1,7 +1,7 @@
 {
-  "name": "web-server",
+  "name": "webserver",
   "version": "1.0.0",
-  "description": "Web server app",
+  "description": "Middleware Express webserver",
   "main": "index.js",
   "scripts": {
     "start": "node index",
@@ -10,7 +10,9 @@
   "author": "Kingsley Awoke",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "date-fns": "^2.30.0",
+    "express": "^4.18.2",
     "uuid": "^9.0.1"
   }
 }
