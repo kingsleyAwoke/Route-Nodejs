@@ -5,11 +5,9 @@ const userDB = {
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
 require('dotenv').config();
-
 const fsPromise = require('fs').promises;
-const path = reuire('path');
+const path = require('path');
 
 const handleLogin = async (req, res) => {
     const { user, pwd } = req.body;
@@ -32,7 +30,16 @@ const handleLogin = async (req, res) => {
             process.env.REFRESH_TOKEN_SECRET,
             { expiresIn: '1d' }
         );
-        res.json({'success': `User ${user} is loggedin`});
+        const otherUsers = userDB.user.filter(person => person.userName !== foundUser.userName);
+
+        const currentUser = { ...foundUser, refreshToken }
+        userDB.setusers([...otherUsers, currentUser]);
+        await fsPromise.writeFile(
+            path.join(__dirname, '..', 'model', 'users.json'),
+            JSON.stringify(userDB.users)
+        );
+        res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+        res.json({ accessToken });
     } else {
         res.sendStatus(401);
 
