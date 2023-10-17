@@ -1,11 +1,8 @@
-const whitelist = [
-    'https://www.gogle.com', 
-    'https://localhost:3500'
-];
+const allowedOrigins = require('./allowOrigins');
 const corsOptions = {
     origin: (origin, callback) => {
         // need to remove the "|| !origin" after development
-        if (whitelist.indexOf(origin) !== -1 || !origin)  {
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin)  {
             callback(null, true)
         } else {
             callback(new Error('Not allowed by CORS'));
