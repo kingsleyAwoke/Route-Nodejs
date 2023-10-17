@@ -3,7 +3,7 @@ const { logEvents } = require('./logEvents');
 
 
 const errorHandler = (err, req, res, next) => {
-    logEvents(`${err.name}: ${err.message}, érrorlog.txt`)
+    logEvents(`${err.name}: ${err.message}, errorlog.txt`)
     console.error(err.stack);
     res.status(500).send(err.message);
 }
